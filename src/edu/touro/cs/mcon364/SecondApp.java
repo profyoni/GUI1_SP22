@@ -31,6 +31,10 @@ public class SecondApp extends JFrame {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             statusLabel.setText(e.getActionCommand());
+                            Object o = e.getSource();
+                           // if ( o instanceof JComponent)
+                                if (o.getClass() == JComponent.class)
+                                ((JTextField)o).setBackground(Color.BLUE);
                         }
                     }
             );

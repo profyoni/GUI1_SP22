@@ -34,14 +34,16 @@ public class FirstApp extends JFrame {
         this.setBackground(Color.GREEN);
 
         JPanel canvasPanel = new JPanel();
-        this.add(canvasPanel, BorderLayout.CENTER); // BorderLayout default
+        this.getContentPane().add(canvasPanel, BorderLayout.CENTER); // BorderLayout default
         // canvasPanel.setBackground( new Color(255, 99, 25));
 
         canvasPanel.setLayout( new GridLayout(6,5,4,4));
+        canvasPanel.setBackground(Color.red);
         for (int i=0;i<30;i++)
         {
             JTextField tf = new JTextField();
             canvasPanel.add(tf);
+            tf.setBackground(Color.blue);
             tf.addActionListener(new ActionListener() { // anonymous inner class
                 @Override
                 public void actionPerformed(ActionEvent e) {
