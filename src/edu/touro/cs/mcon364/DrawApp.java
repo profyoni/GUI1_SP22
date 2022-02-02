@@ -2,10 +2,7 @@ package edu.touro.cs.mcon364;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class DrawApp  extends JFrame {
     private JLabel statusLabel = new JLabel("init");
@@ -17,13 +14,29 @@ public class DrawApp  extends JFrame {
         super("Draw 1.0"); // must be first line
 
         this.setSize(500, 300);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        this.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+
+        });
 
         JPanel canvasPanel = new JPanel();
         this.add(canvasPanel, BorderLayout.CENTER);
         this.add(statusLabel, BorderLayout.SOUTH);
 
 
+        canvasPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+
+            }
+        });
         canvasPanel.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -34,6 +47,7 @@ public class DrawApp  extends JFrame {
 
             @Override
             public void mouseMoved(MouseEvent e) {
+
             }
         });
 
