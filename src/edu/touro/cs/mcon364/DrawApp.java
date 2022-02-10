@@ -5,8 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class DrawApp  extends JFrame {
+    public static void main(String[] args) {
+        new DrawApp();
+    }
     private JLabel statusLabel = new JLabel("init");
     //private int number;
     private JButton incButton;
@@ -15,7 +19,7 @@ public class DrawApp  extends JFrame {
     public DrawApp() {
         super("Draw 1.0"); // must be first line
 
-        this.setSize(500, 300);
+        this.setSize(900, 900);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JPanel canvasPanel = new DrawPanel();
@@ -45,29 +49,55 @@ public class DrawApp  extends JFrame {
 
         }
 
+        Random rand = new Random();
         @Override
         public void paint(Graphics g)
         {
             super.paint(g);
+
             if (originalWidth == 0 && originalHeight == 0) // set width/height first time
             {
                 originalWidth = this.getWidth();
                 originalHeight = this.getHeight();
             }
-            Color c = new Color( (int)(Math.random() * 256),(int)(Math.random() * 256),(int)(Math.random() * 256));
-            g.setColor( c);
-            statusLabel.setText(c.toString());
+
+            //statusLabel.setText(c.toString());
 
             double scaleWidth = (double) this.getWidth() / originalWidth;
             double scaleHeight = (double) this.getHeight() / originalHeight;
+
+            Graphics2D g2 = (Graphics2D)g;
+            g2.scale(scaleWidth,scaleHeight);
             for(Point p : pointList)
             {
-
-                g.fillOval((int)(p.getX()*scaleWidth),
-                        (int)(p.getY()*scaleHeight),
-                        (int)(5 * scaleWidth),
-                        (int)(5 * scaleHeight));
+                Color c = new Color(
+                        rand.nextInt(256)/*preferred*/,
+                        (int)(Math.random() * 256),
+                        (int)(Math.random() * 256));
+                g.setColor( c);
+                g.fillOval((int)p.getX(),
+                        (int)p.getY(),
+                        5 ,
+                        5 );
             }
+
+//            Graphics2D g2 = (Graphics2D)g;
+//            g2.setFont(new Font("Sans Serif",Font.BOLD,50));
+//            g2.translate(500,500);
+//            g2.scale(.2,.2);
+//            for (double d=0.0; d < 2 * Math.PI; d+=0.20 )
+//            {
+//                Color c = new Color(
+//                        rand.nextInt(256)/*preferred*/,
+//                        rand.nextInt(256),
+//                        rand.nextInt(256));
+//                g.setColor( c);
+//                g2.drawString("Hello There!!!", 100, 300);
+//                g2.rotate(0.2);
+//            }
+
+
+
         }
     }
 }

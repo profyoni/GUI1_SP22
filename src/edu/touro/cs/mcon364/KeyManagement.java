@@ -6,6 +6,9 @@ package edu.touro.cs.mcon364;
         import java.awt.event.*;
 
 public class KeyManagement extends JFrame {
+    public static void main(String[] args) {
+        new KeyManagement();
+    }
     private JLabel statusLabel = new JLabel("init");
     //private int number;
     private JButton incButton;
@@ -20,6 +23,9 @@ public class KeyManagement extends JFrame {
         JPanel canvasPanel = new JPanel();
         this.add(canvasPanel, BorderLayout.CENTER);
         this.add(statusLabel, BorderLayout.SOUTH);
+        JButton b = new JButton();
+
+        this.add(b, BorderLayout.NORTH);
 
         canvasPanel.setLayout(new GridLayout(6, 5, 4, 4));
 
@@ -34,8 +40,9 @@ public class KeyManagement extends JFrame {
                 // 0011 BOTH
                 canvasPanel.add(labels[r][c]);
             }
-
+        b.setFocusable(false);
         canvasPanel.setFocusable(true);
+            canvasPanel.grabFocus();
 
         canvasPanel.addKeyListener(
                 new KeyAdapter() {
