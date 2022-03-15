@@ -12,11 +12,11 @@ enum LetterResponse {
     WRONG_LETTER }    // Gray
 
 /*
-if users guesses "TRAIN" (and target is "SHLEP") resposne would be 5 WordleResponses,
+if users guesses "TRAIN" (and target is "SHLEP") response would be 5 WordleResponses,
 first would be a WordleReponse object with the following values
 c='T'
 index = 0
-LetterResponse = LetterRespnse.WRONG_LETTER
+LetterResponse = LetterResponse.WRONG_LETTER
  */
 // enum WordleResponse {CORRECT, WRONG, WRONG_POSITION}
 public class WordleModel {
