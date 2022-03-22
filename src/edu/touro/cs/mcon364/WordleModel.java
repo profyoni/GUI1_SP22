@@ -1,10 +1,32 @@
 package edu.touro.cs.mcon364;
 
 import java.util.List;
+import java.util.Objects;
+
 class WordleResponse{
+
     char c;
     int index;
     LetterResponse resp;
+
+    public WordleResponse(char c, int index, LetterResponse resp) {
+        this.c = c;
+        this.index = index;
+        this.resp = resp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordleResponse that = (WordleResponse) o;
+        return c == that.c && index == that.index && resp == that.resp;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(c, index, resp);
+    }
 }
 enum LetterResponse {
     CORRECT_LOCATION, // Green
