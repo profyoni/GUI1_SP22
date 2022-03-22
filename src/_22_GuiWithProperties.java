@@ -14,24 +14,27 @@ public class _22_GuiWithProperties extends JFrame {
 
     _22_GuiWithProperties()
     {
-        Properties prop = new Properties();
-        try {
-            prop.load(new FileInputStream("app.props"));
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        int width = Integer.parseInt(prop.getProperty("width"));
-        int height = Integer.parseInt(prop.getProperty("height"));
-        int x = Integer.parseInt(prop.getProperty("x"));
-        int y = Integer.parseInt(prop.getProperty("y"));
-
-        setLocation(x,y);
-        setSize(width,height);
-
-
         addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+                Properties prop = new Properties();
+                try {
+                    prop.load(new FileInputStream("app.props"));
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                int width = Integer.parseInt(prop.getProperty("width"));
+                int height = Integer.parseInt(prop.getProperty("height"));
+                int x = Integer.parseInt(prop.getProperty("x"));
+                int y = Integer.parseInt(prop.getProperty("y"));
+
+                setLocation(x,y);
+                setSize(width,height);
+                System.out.println("Opened");
+            }
             @Override
                 public void windowClosing(WindowEvent e) {
                 Properties prop = new Properties();
@@ -53,6 +56,8 @@ public class _22_GuiWithProperties extends JFrame {
             }
         });
 
+        setSize(50, 50);
+        setLocation(10,10);
         setVisible(true);
     }
 }
