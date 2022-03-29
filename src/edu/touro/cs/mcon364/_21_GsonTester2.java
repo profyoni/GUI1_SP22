@@ -16,8 +16,8 @@ public class _21_GsonTester2 {
             _21_GsonTester2 tester = new _21_GsonTester2();
             try {
                 Student student = new Student();
-                student.setAge(10);
-                student.setName("Mahesh");
+                student.setAge(21);
+                student.setName("Akiva");
                 tester.writeJSON(student);
                 Student student1 = tester.readJSON();
                 System.out.println(student1);
@@ -33,9 +33,9 @@ public class _21_GsonTester2 {
         private void writeJSON(Student student) throws IOException {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            FileWriter writer = new FileWriter("student.json");
-            writer.write(gson.toJson(student));
-            writer.close();
+            try(FileWriter writer = new FileWriter("student.json")){
+                writer.write(gson.toJson(student));
+            }
         }
 
         private Student readJSON() throws FileNotFoundException {

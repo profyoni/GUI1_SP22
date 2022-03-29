@@ -1,5 +1,6 @@
 package edu.touro.cs.mcon364;
 
+// all examples from https://www.tutorialspoint.com/gson/
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,13 +10,17 @@ public class _21_GsonTester {
         String jsonString = "{\"name\":\"Mahesh\", \"age\":21}";
 
         GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-
+       // builder.setPrettyPrinting();
         Gson gson = builder.create();
+
         Student student = gson.fromJson(jsonString, Student.class);
         System.out.println(student);
 
-        jsonString = gson.toJson(student);
+        Student student2 = new Student();
+        student2.setAge(120);
+        student2.setName("Joey");
+
+        jsonString = gson.toJson(student2);
         System.out.println(jsonString);
     }
 }

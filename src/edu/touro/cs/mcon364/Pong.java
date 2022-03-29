@@ -6,7 +6,11 @@ import java.awt.event.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+ class FooBar
+        {
 
+          private int f;
+        }
 public class Pong extends JFrame {
     public static void main(String[] args) {
         new Pong();
