@@ -1,10 +1,21 @@
 package edu.touro.cs.mcon364;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 class ThreadSafeList<T> implements List<T>
 {
+    static synchronized void foo(){
+        synchronized ( ThreadSafeList.class ) // means the same as static synchronized
+        {
+
+        }
+    }
     private List<T> bs = new LinkedList<>();
+
 
     @Override
     public int size() {
@@ -75,8 +86,11 @@ class ThreadSafeList<T> implements List<T>
     }
 
     @Override
-    public void clear() {
-
+    public  void clear() {
+        synchronized (this)
+        {
+            // t1
+        }
     }
 
     @Override
@@ -123,6 +137,19 @@ class ThreadSafeList<T> implements List<T>
     public List<T> subList(int fromIndex, int toIndex) {
         return null;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ThreadSafeList<?> that = (ThreadSafeList<?>) o;
+        return Objects.equals(bs, that.bs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bs);
+    }
 }
 
 class MyThread extends Thread{
@@ -145,19 +172,82 @@ class MyThread extends Thread{
         System.out.println("Hi from thread "+ Thread.currentThread().getName());
     }
 }
+// Task
+class MyRunnable implements Runnable{
+    static Object ob = new Object();
+    private List list;
+    public MyRunnable(List list){
+        this.list = list;
+    }
+
+    @Override
+    public void run(){ // main for a thread
+
+        for (int i=0;i<10_000_000;i++)
+        {
+            synchronized (ob) // synchronized block
+            {
+                list.add(i);
+            }
+
+        }
+        System.out.println("Hi from thread "+ Thread.currentThread().getName());
+    }
+}
+
 public class _23_Multithreading {
 
+    public static void main2(String[] args) throws IOException {
+        for (int i=0;i<5;i++)
+        {
+            Process process = new ProcessBuilder("notepad.exe").start();
+        }
+    }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        for (int i=0;i<20;i++)
+        {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        System.out.println("Start " + Thread.currentThread().getName());
+                        Thread.sleep(new Random().nextInt(5000)+2000);
+                        System.out.println("Ended " + Thread.currentThread().getName());
+                    } catch (InterruptedException e) {
+                    }
+                }
+            });
+            executorService.submit(() -> System.out.println("Hello"));
+        }
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(3, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+        }
+        executorService.shutdownNow();
+    }
+
+
+    public static void main8(String[] args) throws InterruptedException {
+
+
+
         List list =  new ArrayList();
         Thread t1 = new MyThread(list);
         Thread t2 = new MyThread(list);
+        Thread t3 = new Thread(new MyRunnable(list));
 
         t1.start();
         t2.start();
+        t3.start();
 
         t1.join();
         t2.join();
+        t3.join();
+
         System.out.println("Hi from thread "+ Thread.currentThread().getName());
         System.out.println(list.size());
     }
