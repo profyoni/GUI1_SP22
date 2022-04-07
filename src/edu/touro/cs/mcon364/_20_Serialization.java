@@ -6,6 +6,8 @@ import java.util.Scanner;
 class MyArrayList implements Serializable
 {
     static final long serialVersionUID = 6138658748769875764l;
+    float f = 3.4f;
+    short x = 32_000;
     private int modCount;
     String s = "Bob";
     private int ip = 0;

@@ -204,7 +204,7 @@ public class _23_Multithreading {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
 
         for (int i=0;i<20;i++)
@@ -220,8 +220,10 @@ public class _23_Multithreading {
                     }
                 }
             });
-            executorService.submit(() -> System.out.println("Hello"));
+            executorService.submit( () -> { System.out.println("Hello");  }
+            );
         }
+        Runnable r =         () -> System.out.println("Hello");
         executorService.shutdown();
         try {
             executorService.awaitTermination(3, TimeUnit.SECONDS);
@@ -230,6 +232,48 @@ public class _23_Multithreading {
         executorService.shutdownNow();
     }
 
+
+    static void doAction(Runnable method, int times){
+        for (int i=0;i<times;i++)
+        {
+           method.run();
+        }
+    }
+
+    static int doAction(int seed, TwoArgs op, int []list)
+    {
+        int total = seed;
+        for (int elt: list) {
+            total = op.operation(total, elt);
+        }
+        return total;
+    }
+
+    interface TwoArgs
+    {
+        abstract int operation(int a, int b);
+    }
+
+    static class Add implements TwoArgs
+    {
+        public int operation(int a, int b){
+            return a + b;
+        }
+    }
+    public static void main(String[] args) {
+        doAction(()-> System.out.println("Hooray"), 10);
+
+        var list = new int[]{1,2,3,4,3,2,1};
+        int t = doAction( 1, (a, b) -> a * b, list);
+        System.out.println(t);
+
+        System.out.println(Arrays.stream(list).count());
+        System.out.println(Arrays.stream(list).average());
+        Arrays.stream(Arrays.stream(list).filter(q -> q % 2 == 0)
+                .distinct().toArray())
+                .forEach(System.out::println);
+
+    }
 
     public static void main8(String[] args) throws InterruptedException {
 
