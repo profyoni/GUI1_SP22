@@ -8,6 +8,9 @@ import java.util.Random;
 public class _26_SwingThreads extends JFrame {
     public static void main(String[] args) {
         new _26_SwingThreads();
+
+        // Immutable Integer and Inherent Thread Safety of Immutable object
+        // Boxing, Unboxing and Unnecessary expense of using Integer instead of int
 //        Integer x = new Integer(0);
 //        Integer y = x;
 //        // PETO up in arms
